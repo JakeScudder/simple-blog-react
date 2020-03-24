@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Blog = require('../db/models').Blog;
+const User = require('../db/models').User;
 
 const { check, validationResult } = require('express-validator');
+const bcryptjs = require('bcryptjs');
+const auth = require('basic-auth');
 
-/* Handler function to wrap each route. */
+// Handler function to wrap each route
 function asyncHandler(cb){
   return async(req, res, next) => {
     try {
@@ -15,9 +18,47 @@ function asyncHandler(cb){
   }
 }
 
+//Authenticate User Function
+const authenticateUser = async (req, res, next) => {
+  let message = null;
+  const credentials = auth(req);
+  if (credentials) {
+    // const user = User.find(u => u.emailAddress === credentials.name);
+    const user = await User.findOne({
+      where: { emailAddress: credentials.name }
+    });
+    console.log(user);
+    if (user) {
+      const authenticated = bcryptjs
+        .compareSync(credentials.pass, user.password)
+      if (authenticated) {
+        console.log(`Authentication successful for: ${user.emailAddress}`);
+        req.currentUser = user;
+      } else {
+        message = `Could not authenticate ${user.emailAddress}`;
+      }
+    } else {
+      message = `Could not find the username: ${user.emailAddress}`;
+    } 
+  } else {
+    message = `Authenticate header not found`;
+  }
+  if (message) {
+    console.warn(message);
+    res.status(401).json({message: "Access denied" });
+  } else {
+    next();
+  }
+}
+
 // GET Blog Posts
 router.get('/blog', asyncHandler(async (req, res) => {
-  const allBlogs = await Blog.findAll();
+  const allBlogs = await Blog.findAll({
+    include: {
+      model: User,
+      attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
+    },
+  });
   res.status(200).json({allBlogs});
 }))
 
@@ -39,7 +80,7 @@ router.post('/new', [
   check('post')
     .exists({checkNull: true, checkFalsy: true})
     .withMessage('Please include your "blog post"'),
-], asyncHandler(async (req, res) => {
+], authenticateUser, asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   //If there are validation errors
   if(!errors.isEmpty()) {
@@ -68,7 +109,7 @@ router.put('/blog/:id', [
   check('post') 
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Blog post is blank'),
-], asyncHandler(async (req, res) => {
+], authenticateUser, asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   //If there are errors
   if(!errors.isEmpty()) {
@@ -94,7 +135,7 @@ router.put('/blog/:id', [
 }));
 
 //DELETE route deletes a course, returns no content
-router.delete('/blog/:id', asyncHandler( async (req, res) => {
+router.delete('/blog/:id', authenticateUser, asyncHandler( async (req, res) => {
   try {
     // const user = req.currentUser;
     let blogPost = await Blog.findByPk(req.params.id);

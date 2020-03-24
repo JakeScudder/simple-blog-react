@@ -120,7 +120,7 @@ router.post('/users',[
 })
 
 //DELETE route deletes a user, returns no content
-router.delete('/users/:id', asyncHandler( async (req, res) => {
+router.delete('/users/:id', authenticateUser, asyncHandler( async (req, res) => {
   try {
     // const user = req.currentUser;
     let user = await User.findByPk(req.params.id);
