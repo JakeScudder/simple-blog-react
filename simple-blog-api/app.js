@@ -25,7 +25,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const blogs = require('./routes/blogs');
+const users = require('./routes/users');
 
+//Routes
+
+app.use('/api', users);
 app.use('/api', blogs);
 
 app.get('/', (req, res) => {
