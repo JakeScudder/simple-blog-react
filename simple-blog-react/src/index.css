@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body, html {
+  height: 100%;
+}
+
+div#App {
+  margin-left:auto;
+  margin-right:auto;
+  width:90%;
+}
+
+.blog-title {
+  margin-bottom: -20px;
+}
+
+.blog-author {
+  margin-bottom: -15px;
+}
+
+.blog-post {
+  margin-bottom: 40px;
+}

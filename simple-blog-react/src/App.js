@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
+
+//Components
+import BlogPosts from './components/BlogPosts';
 
 class App extends Component {
   constructor() {
@@ -45,8 +47,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div id="App">
         <h1> Simple Blog</h1>
+        <BlogPosts blogData={this.state.blogPosts}/>
       </div>
     );
   } 
