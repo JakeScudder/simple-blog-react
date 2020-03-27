@@ -10,6 +10,7 @@ class BlogPosts extends Component {
 
   render() {
     const data = (this.props.blogData);
+    const isAuth = this.props.isAuth
     return(
       <div id="blog-post-container">
         { data ? 
@@ -22,6 +23,13 @@ class BlogPosts extends Component {
                 <h3 className="blog-title">{blogTitle}</h3>
                 <h5 className="blog-author">{blogAuthor}</h5>
                 <p className="blog-post">{blogPost}</p>
+                {isAuth ? 
+                  <div>
+                    <button className="edit">Edit</button>
+                    <button className="delete">Delete</button>
+                  </div>
+                  : null
+                }
               </React.Fragment> 
             )
           })
