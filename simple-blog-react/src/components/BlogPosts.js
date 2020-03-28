@@ -8,6 +8,11 @@ class BlogPosts extends Component {
     }
   }
 
+  update = (event) => {
+    let id = event.target.name
+    this.props.history.push(`/${id}/update`)
+  }
+
   render() {
     const data = (this.props.blogData);
     const isAuth = this.props.isAuth
@@ -18,6 +23,7 @@ class BlogPosts extends Component {
             let blogPost = post.post;
             let blogAuthor = post.author;
             let blogTitle = post.title;
+            let blogId = post.id;
             return (
               <React.Fragment key={index}>
                 <h3 className="blog-title">{blogTitle}</h3>
@@ -25,8 +31,7 @@ class BlogPosts extends Component {
                 <p className="blog-post">{blogPost}</p>
                 {isAuth ? 
                   <div>
-                    <button className="edit">Edit</button>
-                    <button className="delete">Delete</button>
+                    <button className="edit" name={blogId} onClick={this.update}>Edit</button>
                   </div>
                   : null
                 }

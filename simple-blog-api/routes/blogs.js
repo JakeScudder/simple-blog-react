@@ -106,6 +106,9 @@ router.put('/blog/:id', [
   check('title') 
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Please include your "blog title"'),
+  check('author') 
+    .exists({ checkNull: true, checkFalsy: true })
+    .withMessage('Please include your name: "Jake"'),
   check('post') 
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Blog post is blank'),
@@ -143,7 +146,7 @@ router.delete('/blog/:id', authenticateUser, asyncHandler( async (req, res) => {
         await blogPost.destroy();
         res.status(204).end();
       } else {
-        res.status(403).json({message: "Sorry, we can't located the blog post to be deleted"})
+        res.status(403).json({message: "Sorry, we can't locate the blog post to be deleted"})
       }
   } catch(error) {
     res.status(500).json({message: error.message})

@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 
 //Components
 import BlogPosts from './components/BlogPosts';
+import UpdateBlog from './components/UpdateBlog';
 import Admin from './components/Admin';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
       authUser: Cookies.getJSON('authUser') || null,
       name: Cookies.getJSON('name') || null,
       isAuth: Cookies.getJSON('isAuth') || null,
+      showing: null
     }
   }
 
@@ -83,15 +85,17 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div id="App">
-        <h1> Simple Blog</h1>
+        <h1 id="blog-header"> Simple Blog</h1>
         {this.state.isAuth ? 
           <button id="signout" onClick={this.signOut}>Sign Out</button>
           : null
         }
         <Switch>
-          <Route exact path="/" render={(props) => <BlogPosts blogData={this.state.blogPosts} isAuth={this.state.isAuth}/> }
+          <Route exact path="/" render={(props) => <BlogPosts blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }
           />
           <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }
+          />
+          <Route exact path="/:id/update" component={(props) => <UpdateBlog user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }
           />
         </Switch>
         

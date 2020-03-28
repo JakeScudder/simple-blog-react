@@ -22,6 +22,11 @@ div#App {
   width:90%;
 }
 
+#blog-header {
+  width: 75%;
+  display: inline-block;
+}
+
 .blog-title {
   margin-bottom: -20px;
 }
@@ -31,5 +36,36 @@ div#App {
 }
 
 .blog-post {
-  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+#input-post {
+  width: 90%;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.edit {
+  border: 1px solid black;
+  margin-right: 10px;
+  background: white;
+}
+
+#submit-button {
+  border: 1px solid black;
+  background: white;
+  width: 35%;
+  margin-right: 20px;
+}
+
+#delete-button {
+  border: 1px solid black;
+  background: white;
+  width: 35%
+}
+
+#submit-delete {
+  display: inline-block;
+  width: 90%;
 }
