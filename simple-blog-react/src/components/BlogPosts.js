@@ -11,6 +11,7 @@ class BlogPosts extends Component {
 
   update = (event) => {
     let id = event.target.name
+    this.props.hideHeader();
     this.props.history.push(`/${id}/update`)
   }
 

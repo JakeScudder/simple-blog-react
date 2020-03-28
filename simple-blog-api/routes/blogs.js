@@ -70,7 +70,7 @@ router.get('/blog/:id', asyncHandler(async (req, res) => {
 }))
 
 // POST Create Blog Post
-router.post('/new', [
+router.post('/blog/new', [
   check('title')
     .exists({checkNull: true, checkFalsy: true})
     .withMessage('Please include your "title"'),
@@ -90,7 +90,7 @@ router.post('/new', [
   let blogPost;
   try {
     blogPost = await Blog.create(req.body);
-    res.json({blogPost});
+    res.status(201).json({blogPost});
   } catch (error) {
     console.log(error);
     if (error.name === "SequelizeValidationError") {

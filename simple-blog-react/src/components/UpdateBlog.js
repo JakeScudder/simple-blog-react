@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
 class UpdateBlog extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class UpdateBlog extends Component {
 
   handleCancel = (event) => {
     event.preventDefault();
+    this.props.hideHeader();
     this.props.history.goBack();
   }
 
@@ -69,7 +70,7 @@ class UpdateBlog extends Component {
     this.setState({
       loading: true
     })
-    Axios.get(`http://localhost:5000/api/blog/${query}`)
+    axios.get(`http://localhost:5000/api/blog/${query}`)
       .then(this.errorHandler)
       .then(response => {
         console.log(response);
@@ -161,7 +162,8 @@ class UpdateBlog extends Component {
 
   render() {
     return(
-      <div>
+      <div id="update-container-div">
+      <h1>Update</h1>
       {this.state.errorMessage ? 
         <div>
         {this.state.errorMessage.map((error, index) => {
@@ -171,7 +173,7 @@ class UpdateBlog extends Component {
         </div>
       :null
       }
-      <form onSubmit={this.handleSubmit}>
+      <form id="update-form" onSubmit={this.handleSubmit}>
         <h3>Title</h3>
         <input id="input-title" name="title" placeholder="Title" onChange={this.handleChange} value={this.state.title}/>
 
@@ -189,10 +191,13 @@ class UpdateBlog extends Component {
         </div>
         : null
         }
-          <button id="submit-button" onClick={this.handleSubmit}>Submit</button>
       </form>
-      <button id="delete-button" onClick={this.areYouSure} >Delete</button>
+      <div id="update-button-div">
+        <button className="options-button" onClick={this.handleSubmit}>Submit</button>
+        <button className="options-button" onClick={this.handleCancel}> Cancel </button>
+        <button className="options-button" onClick={this.areYouSure} >Delete</button>
       </div>
+    </div>
     )
   }
 }

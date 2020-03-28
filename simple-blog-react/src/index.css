@@ -16,10 +16,15 @@ body, html {
   height: 100%;
 }
 
+div#root {
+  height: 100%;
+}
+
 div#App {
   margin-left:auto;
   margin-right:auto;
   width:90%;
+  height: 70%;
 }
 
 #blog-header {
@@ -39,33 +44,64 @@ div#App {
   font-size: 14px;
 }
 
-#input-post {
-  width: 40%;
-  height: 200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .edit {
   border: 1px solid black;
   margin-right: 10px;
   background: white;
 }
 
-#submit-button {
-  border: 1px solid black;
-  background: white;
-  width: 35%;
-  margin-right: 20px;
-}
-
-#delete-button {
-  border: 1px solid black;
-  background: white;
-  width: 35%
-}
-
 #submit-delete {
   display: inline-block;
   width: 90%;
+}
+
+/********** Update Form */
+
+#input-post {
+  width: 80%;
+  height: 200px;
+  margin-right: auto;
+}
+
+#update-container-div {
+  height: 100%;
+}
+
+#update-form {
+  height: 100%;
+}
+#update-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.options-button {
+  border: 1px solid black;
+  background: white;
+  width: 27%;
+  margin-right: 10px;
+}
+
+/************** Create New */
+
+.description-tags {
+  margin-top: -5px;
+  margin-bottom: 7px;
+}
+
+#create-title {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+}
+
+#create-author {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+}
+
+#create-post {
+  height: 200px;
+  width: 80%;
 }

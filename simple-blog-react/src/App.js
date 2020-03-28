@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 
 //Components
 import BlogPosts from './components/BlogPosts';
+import CreatePost from './components/CreatePost';
 import UpdateBlog from './components/UpdateBlog';
 import Admin from './components/Admin';
 
@@ -18,7 +19,8 @@ class App extends Component {
       authUser: Cookies.getJSON('authUser') || null,
       name: Cookies.getJSON('name') || null,
       isAuth: Cookies.getJSON('isAuth') || null,
-      showing: null
+      showing: null,
+      hideHeader: null
     }
   }
 
@@ -81,27 +83,45 @@ class App extends Component {
     return <Redirect to="/" />;
   }
 
+  createNew = () => {
+    window.location.href = "/blog/new";
+  }
+
+  hideHeader = () => {
+    if (!this.state.hideHeader) {
+      this.setState({
+        hideHeader: true,
+      }) 
+    } else {
+      this.setState({
+        hideHeader: false,
+      }) 
+    }
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div id="App">
-        <h1 id="blog-header"> Simple Blog</h1>
-        {this.state.isAuth ? 
-          <button id="signout" onClick={this.signOut}>Sign Out</button>
-          : null
+        { !this.state.hideHeader ? 
+          <h1 id="blog-header"> Simple Blog</h1>
+        : null
         }
+            {this.state.isAuth && !this.state.hideHeader ? 
+              <React.Fragment>
+                <button id="create-new-button" onClick={this.createNew}> Create New</button>
+                <button id="signout" onClick={this.signOut}>Sign Out</button>
+              </React.Fragment>
+              : null
+            }
         <Switch>
-          <Route exact path="/" render={(props) => <BlogPosts blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }
-          />
-          <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }
-          />
-          <Route exact path="/:id/update" component={(props) => <UpdateBlog user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }
-          />
+          <Route exact path="/" render={(props) => <BlogPosts hideHeader={this.hideHeader} blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }/>
+          <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }/>
+          <Route exact path="/:id/update" component={(props) => <UpdateBlog hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
+          <Route exact path="/blog/new" render={(props) => <CreatePost hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
         </Switch>
-        
-      </div>
+        </div>
       </BrowserRouter>
-      
     );
   } 
 }
