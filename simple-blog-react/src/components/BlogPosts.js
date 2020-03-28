@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 class BlogPosts extends Component {
   constructor(props) {
@@ -20,15 +21,17 @@ class BlogPosts extends Component {
       <div id="blog-post-container">
         { data ? 
           data.map((post, index) => {
-            let blogPost = post.post;
-            let blogAuthor = post.author;
+            console.log(post);
             let blogTitle = post.title;
+            let blogAuthor = post.author;
+            let blogPost = post.post;
             let blogId = post.id;
             return (
               <React.Fragment key={index}>
                 <h3 className="blog-title">{blogTitle}</h3>
                 <h5 className="blog-author">{blogAuthor}</h5>
-                <p className="blog-post">{blogPost}</p>
+                {/* <p className="blog-post">{blogPost}</p> */}
+                <ReactMarkdown className="blog-post" source={blogPost} />
                 {isAuth ? 
                   <div>
                     <button className="edit" name={blogId} onClick={this.update}>Edit</button>
