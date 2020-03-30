@@ -27,21 +27,16 @@ div#App {
   height: 70%;
 }
 
-#blog-header {
-  width: 75%;
-  display: inline-block;
-}
-
-.blog-title {
-  margin-bottom: -20px;
-}
-
 .blog-author {
   margin-bottom: -15px;
 }
 
 .blog-post {
   font-size: 14px;
+}
+
+.blog-post p {
+  margin-bottom: 5px;
 }
 
 .edit {
@@ -54,6 +49,67 @@ div#App {
   display: inline-block;
   width: 90%;
 }
+
+/********** Header */
+#blog-header {
+  width: 75%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.blog-title {
+  margin-bottom: -20px;
+}
+
+#create-new-button {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  background: white;
+}
+
+
+#signout {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  background: white;
+}
+
+
+
+/********** Sign In */
+
+#h3-sign-in {
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+#password {
+  border: 1px solid black;
+  margin-bottom: 15px;
+}
+
+#emailAddress {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+/********** Blog Posts*/
+
+.author-date-div {
+  display: inline-block;
+  height: 15px;
+}
+
+.blog-author {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.date-created {
+  display: inline-block
+}
+
 
 /********** Update Form */
 

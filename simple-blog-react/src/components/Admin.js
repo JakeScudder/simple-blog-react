@@ -83,18 +83,21 @@ class Admin extends Component {
 
   render() {
     return(
-      <div className="bounds">
-        <div className="grid-33 centered signin">
-          <h1>Sign In</h1>
+      <div id="sign-in-div">
+          <h3 id="h3-sign-in">Sign In</h3>
           <div>
             <form onSubmit={this.handleSubmit}>
-              <div><input id="emailAddress" name="emailAddress" type="text" onChange={this.handleEmail} className="" placeholder="Email Address" value={this.state.email}/></div>
-              <div><input id="password" name="password" type="password" className="" onChange={this.handlePassword}placeholder="Password" value={this.state.password}/></div>
-              <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={this.handleCancel}>Cancel</button></div>
+              <div>
+                <input id="emailAddress" name="emailAddress" type="text" onChange={this.handleEmail} className="" placeholder="Email Address" value={this.state.email}/>
+              </div>
+              <div>
+                <input id="password" name="password" type="password" className="" onChange={this.handlePassword}placeholder="Password" value={this.state.password}/>
+              </div>
+              <div className="sign-in-buttons">
+                <button className="options-button" type="submit">Sign In</button>
+                <button className="options-button" onClick={this.handleCancel}>Cancel</button>
+              </div>
             </form>
-          </div>
-          <p>&nbsp;</p>
-          {/* <p>Don't have a user account? <a href="/signup">Click here</a> to sign up!</p> */}
         </div>
       </div>
     )
