@@ -18,7 +18,8 @@ class BlogPosts extends Component {
   getDate = (blogDate) => {
     let date = new Date(blogDate);
     date = date.toDateString();
-    return date;
+    date = date.split(" ");
+    return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
   }
 
   render() {
@@ -31,7 +32,6 @@ class BlogPosts extends Component {
        */}
         { data ? 
           data.slice(0).reverse().map((post, index) => {
-            console.log(post);
             let blogTitle = post.title;
             let blogAuthor = post.author;
             let blogPost = post.post;
@@ -42,7 +42,7 @@ class BlogPosts extends Component {
               <React.Fragment key={index}>
                 <h3 className="blog-title">{blogTitle}</h3>
                 <div className="author-date-div">
-                  <h5 className="blog-author">{blogAuthor},</h5>
+                  <h5 className="blog-author">{blogAuthor}  --  </h5>
                   <h5 className="date-created">{formatDate}</h5>
                 </div>
                 <ReactMarkdown className="blog-post" source={blogPost} />

@@ -23,20 +23,32 @@ div#root {
 div#App {
   margin-left:auto;
   margin-right:auto;
-  width:90%;
+  width: 90%;
   height: 70%;
 }
 
-.blog-author {
-  margin-bottom: -15px;
+#blog-post-container {
+  color: black;
 }
 
 .blog-post {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .blog-post p {
   margin-bottom: 5px;
+  margin-block-end: 10px;
+}
+
+/* Reduce margin of first paragraph only*/
+.blog-post p:first-child {
+  margin-top:-15px;
+}
+
+#blog-nav-flex-container {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
 }
 
 .edit {
@@ -55,6 +67,7 @@ div#App {
   width: 75%;
   display: inline-block;
   margin-bottom: 10px;
+  max-width: 500px;
 }
 
 .blog-title {
@@ -73,6 +86,28 @@ div#App {
   border: 1px solid black;
   margin-bottom: 10px;
   background: white;
+}
+
+/********** Nav */
+#nav-div {
+  display: inline-block;
+  width: 180px;
+}
+
+#nav-div-description {
+  font-size: 12px;
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.nav-li {
+  list-style: none;
+  width: 100%
+}
+
+.nav-description {
+  margin-bottom: 12px;
+  border-bottom: solid black 2px;
 }
 
 
@@ -98,7 +133,6 @@ div#App {
 
 .author-date-div {
   display: inline-block;
-  height: 15px;
 }
 
 .blog-author {

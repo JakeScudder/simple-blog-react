@@ -66,7 +66,11 @@ router.get('/blog', asyncHandler(async (req, res) => {
 router.get('/blog/:id', asyncHandler(async (req, res) => {
   const blog = await Blog.findByPk(req.params.id)
   console.log(blog);
-  res.status(200).json(blog);
+  if (blog) {
+    res.status(200).json(blog);
+  } else {
+    res.status(404).json({message: "Sorry, we couldn't find that blog"});
+  }
 }))
 
 // POST Create Blog Post

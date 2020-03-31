@@ -9,6 +9,8 @@ import BlogPosts from './components/BlogPosts';
 import CreatePost from './components/CreatePost';
 import UpdateBlog from './components/UpdateBlog';
 import Admin from './components/Admin';
+import Nav from './components/Nav';
+import BlogDetail from './components/BlogDetail';
 
 class App extends Component {
   constructor() {
@@ -48,7 +50,7 @@ class App extends Component {
             blogPosts: res.data.allBlogs,
             loading: false
           }) 
-          console.log(this.state.blogPosts);
+          // console.log(this.state.blogPosts);
         }
       )
       .catch(error => {
@@ -114,12 +116,17 @@ class App extends Component {
               </React.Fragment>
               : null
             }
-        <Switch>
-          <Route exact path="/" render={(props) => <BlogPosts hideHeader={this.hideHeader} blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }/>
-          <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }/>
-          <Route exact path="/:id/update" component={(props) => <UpdateBlog hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
-          <Route exact path="/blog/new" render={(props) => <CreatePost hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
-        </Switch>
+        <div id="blog-nav-flex-container">
+          <Switch>
+            <Route exact path="/" render={(props) => <BlogPosts hideHeader={this.hideHeader} blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }/>
+            <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }/>
+            <Route exact path="/:id/update" component={(props) => <UpdateBlog hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
+            <Route exact path="/blog/:id" component={(props) => <BlogDetail blogData={this.state.blogPosts} {...props}/>} />
+            <Route exact path="/blog/new" render={(props) => <CreatePost hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
+          </Switch>
+          <Nav blogData={this.state.blogPosts}/>
+        </div>
+        
         </div>
       </BrowserRouter>
     );
