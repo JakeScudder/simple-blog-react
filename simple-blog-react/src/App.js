@@ -58,6 +58,13 @@ class App extends Component {
       })
   }
 
+  setBlogId = (query) => {
+    debugger
+    this.setState({
+      blogId: query,
+    })
+  }
+
   //Authorize User
   handleAuthUser = (email, password, data) => {
     let object = {email, password};
@@ -121,8 +128,10 @@ class App extends Component {
             <Route exact path="/" render={(props) => <BlogPosts hideHeader={this.hideHeader} blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }/>
             <Route exact path="/admin" render={(props) => <Admin blogData={this.state.blogPosts} updateState={this.handleAuthUser} {...props}/> }/>
             <Route exact path="/:id/update" component={(props) => <UpdateBlog hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
-            <Route exact path="/blog/:id" component={(props) => <BlogDetail blogData={this.state.blogPosts} {...props}/>} />
             <Route exact path="/blog/new" render={(props) => <CreatePost hideHeader={this.hideHeader} user={this.state.authUser} isAuth={this.state.isAuth} {...props}/> }/>
+
+            <Route exact path="/blog/:id" render={(props) => <BlogDetail  blogId={this.state.blogId} {...props}/>} />
+
           </Switch>
           <Nav blogData={this.state.blogPosts}/>
         </div>

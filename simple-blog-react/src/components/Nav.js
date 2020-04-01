@@ -1,43 +1,55 @@
-import React from 'react';
-import { withRouter } from "react-router";
+import React, { Component } from 'react';
 
-const Nav = (props) => {
-    let data = props.blogData
+class Nav extends Component {
+  constructor(props) {
+    super(props); 
+    this.state = {
+      loading: false
+    }
+  }
 
-    const getDate = (blogDate) => {
+    getDate = (blogDate) => {
       let date = new Date(blogDate);
       date = date.toDateString();
       date = date.split(" ");
       return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
     }
 
-    const getBlog = (event) => {
-      let id = event.target.value;
-      props.history.push(`/blog/${id}`);
-    }
-  return (
-    <div id="nav-div">
-      <ul>
-        <li id="nav-div-description"> Sorted by Oldest First</li>
-        {data ? 
-        data.map((post, index) => {
-          let blogTitle = post.title;
-          let blogId = post.id;
-          let blogDate = post.createdAt;
-          let formatDate = getDate(blogDate);
-          return (
-            <React.Fragment key={index}>
-            <div className="nav-description" value={blogId}>
-            <li className="nav-li" name={blogId} value={blogId} onClick={getBlog}><strong>{blogTitle}</strong></li> <li className="nav-li" value={blogId} name={blogId} onClick={getBlog}>{formatDate}</li>
-            </div>
-            </React.Fragment>
-          )
-        })
-        : null
-        }
-      </ul>
-    </div>
-  )
+  render() {
+    let data = this.props.blogData
+    return (
+      <div id="nav-div">
+        <ul id="nav-ul">
+          <li id="nav-div-description"> Sorted by Oldest First</li>
+          {data ? 
+          data.map((post, index) => {
+            let blogTitle = post.title;
+            let blogId = post.id;
+            let blogDate = post.createdAt;
+            let formatDate = this.getDate(blogDate);
+            let url = `/blog/${blogId}`;
+            return (
+              <div onClick={this.handleClick} key={blogId}>
+              <a href={url}>
+                <div className="nav-description">
+                  <li className="nav-li" ><strong>{blogTitle}</strong></li> 
+                  <li className="nav-li">{formatDate}</li>
+                </div>
+              </a>
+              
+              </div>
+            )
+          })
+          : null
+          }
+          <a href="/">
+            <li className="nav-li">Home</li>
+          </a>
+        </ul>
+      </div>
+    )
+ }  
 }
-const NavWithRouter = withRouter(Nav)
-export default NavWithRouter;
+export default Nav;
+// const NavWithRouter = withRouter(Nav)
+// export default NavWithRouter;
