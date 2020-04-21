@@ -11,7 +11,10 @@ module.exports = (sequelize) => {
     },
     title: Sequelize.STRING,
     author: Sequelize.STRING,
+    genre: Sequelize.STRING,
+    image: Sequelize.STRING,
     post: Sequelize.TEXT,
+    
   }, { sequelize });
 
   Blog.associate = (models) => {

@@ -9,6 +9,8 @@ class UpdateBlog extends Component {
       title: "",
       author: "",
       post: "",
+      genre: "",
+      image: "",
       errorMessage: null,
     }
   }
@@ -79,6 +81,8 @@ class UpdateBlog extends Component {
           title: response.data.title,
           author: response.data.author,
           post: response.data.post,
+          genre: response.data.genre,
+          image: response.data.image,
         })
       })
       .catch(error => {
@@ -91,13 +95,15 @@ class UpdateBlog extends Component {
       title,
       author,
       post,
+      genre,
+      image,
     } = this.state;
 
     let email = this.props.user.email;
     let password = this.props.user.password;
     let url = `http://localhost:5000/api/blog/${this.state.blogId}`;
 
-    const response = await this.apiAuthFunction(url, 'PUT', {title, author, post}, true, {email, password});
+    const response = await this.apiAuthFunction(url, 'PUT', {title, author, post, genre, image}, true, {email, password});
     if (response.status === 204) {
       window.location.href = '/';
     } else if (response.status === 400) {
@@ -175,19 +181,22 @@ class UpdateBlog extends Component {
       }
       <form id="update-form" onSubmit={this.handleSubmit}>
         <h3>Title</h3>
-        <input id="input-title" name="title" placeholder="Title" onChange={this.handleChange} value={this.state.title}/>
-
+          <input id="input-title" name="title" placeholder="Title" onChange={this.handleChange} value={this.state.title}/>
         <h3>Author</h3>
-        <input id="input-author" name="author" placeholder="Author" onChange={this.handleChange} value={this.state.author}/>
+          <input id="input-author" name="author" placeholder="Author" onChange={this.handleChange} value={this.state.author}/>
+        <h3>Genre</h3>
+          <input id="input-genre" name="genre" placeholder="Genre" onChange={this.handleChange} value={this.state.genre}/>
+        <h3>Image</h3>
+          <input id="input-image" name="image" placeholder="Image" onChange={this.handleChange} value={this.state.image}/>
 
         <h3>Blog Post</h3>
-        <textarea id="input-post" name="post" placeholder="Post" onChange={this.handleChange} value={this.state.post}/>
+          <textarea id="input-post" name="post" placeholder="Post" onChange={this.handleChange} value={this.state.post}/>
         <p></p>
         { this.state.showing ? 
         <div id="blog-delete-confirm">
           <h3>Are you sure you want to delete this blog post?</h3>
-          <button onClick={this.delete}>Yes, delete this</button>
-          <button onClick={this.areYouSure}>No, I don't want to delete this</button>
+            <button onClick={this.delete}>Yes, delete this</button>
+            <button onClick={this.areYouSure}>No, I don't want to delete this</button>
         </div>
         : null
         }

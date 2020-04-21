@@ -34,12 +34,14 @@ class BlogPosts extends Component {
           data.slice(0).reverse().map((post, index) => {
             let blogTitle = post.title;
             let blogAuthor = post.author;
+            let blogImage = post.image;
             let blogPost = post.post;
             let blogId = post.id;
             let blogDate = post.createdAt
             let formatDate = this.getDate(blogDate)
             return (
               <React.Fragment key={index}>
+                <img className="image-thumbnail" src={blogImage}/>
                 <h3 className="blog-title">{blogTitle}</h3>
                 <div className="author-date-div">
                   <h5 className="blog-author">{blogAuthor}  --  </h5>
@@ -52,6 +54,7 @@ class BlogPosts extends Component {
                   </div>
                   : null
                 }
+                <hr className="line-break"></hr>
               </React.Fragment> 
             )
           })

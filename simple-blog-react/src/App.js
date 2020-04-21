@@ -115,7 +115,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div id="App">
+        <div id="header-div"> 
         { !this.state.hideHeader ? 
+          
           <h1 id="blog-header"> Simple Blog</h1>
         : null
         }
@@ -126,6 +128,7 @@ class App extends Component {
               </React.Fragment>
               : null
             }
+          </div>
           <div id="blog-nav-flex-container">
             <Switch>
               <Route exact path="/" render={(props) => <BlogPosts hideHeader={this.hideHeader} blogData={this.state.blogPosts} isAuth={this.state.isAuth} {...props} /> }/>

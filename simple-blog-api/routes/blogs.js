@@ -126,11 +126,13 @@ router.put('/blog/:id', [
   //Update Blog
   try {
     let blog = await Blog.findByPk(req.params.id);
-    console.log("blog title:", blog.title);
+    console.log("blog genre:", blog.genre);
     console.log("req.params.id:", req.params.id);
     if (blog) {
       blog.title = req.body.title;
       blog.post = req.body.post;
+      blog.genre = req.body.genre;
+      blog.image = req.body.image;
       await blog.update(req.body);
       res.status(204).end();
     } else {

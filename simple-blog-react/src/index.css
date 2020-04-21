@@ -32,6 +32,11 @@ a {
   color: black;
 }
 
+.line-break {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 #blog-post-container {
   color: black;
 }
@@ -53,7 +58,14 @@ a {
 #blog-nav-flex-container {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 65%;
+}
+
+.image-thumbnail {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  display: block;
 }
 
 .edit {
@@ -70,7 +82,7 @@ a {
 
 /********** Header */
 #blog-header {
-  width: 25%;
+  width: 20%;
   display: inline-block;
   margin-bottom: 10px;
   max-width: 500px;
@@ -80,11 +92,17 @@ a {
   margin-bottom: -20px;
 }
 
+#header-div {
+  line-height:25px;
+}
+
 #create-new-button {
   border: 2px solid black;
   margin-right: 10px;
   background: white;
   font-size: 14px;
+  margin-top: -10px;
+  vertical-align: middle;
 }
 
 
@@ -92,6 +110,8 @@ a {
   border: 2px solid black;
   background: white;
   font-size: 14px;
+  margin-top: -10px;
+  vertical-align: middle;
 }
 
 /********** Nav */
