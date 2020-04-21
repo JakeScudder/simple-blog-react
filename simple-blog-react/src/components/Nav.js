@@ -20,6 +20,9 @@ class Nav extends Component {
     return (
       <div id="nav-div">
         <ul id="nav-ul">
+          <a href="/">
+            <li className="nav-li-home">Home</li>
+          </a>
           <li id="nav-div-description"> Sorted by Oldest First</li>
           {data ? 
           data.map((post, index) => {
@@ -42,9 +45,6 @@ class Nav extends Component {
           })
           : null
           }
-          <a href="/">
-            <li className="nav-li">Home</li>
-          </a>
         </ul>
       </div>
     )

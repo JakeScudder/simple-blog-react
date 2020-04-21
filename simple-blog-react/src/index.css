@@ -27,6 +27,11 @@ div#App {
   height: 70%;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 #blog-post-container {
   color: black;
 }
@@ -55,6 +60,7 @@ div#App {
   border: 1px solid black;
   margin-right: 10px;
   background: white;
+  font-size: 14px;
 }
 
 #submit-delete {
@@ -64,7 +70,7 @@ div#App {
 
 /********** Header */
 #blog-header {
-  width: 75%;
+  width: 25%;
   display: inline-block;
   margin-bottom: 10px;
   max-width: 500px;
@@ -75,17 +81,17 @@ div#App {
 }
 
 #create-new-button {
-  border: 1px solid black;
-  margin-bottom: 10px;
+  border: 2px solid black;
   margin-right: 10px;
   background: white;
+  font-size: 14px;
 }
 
 
 #signout {
-  border: 1px solid black;
-  margin-bottom: 10px;
+  border: 2px solid black;
   background: white;
+  font-size: 14px;
 }
 
 /********** Nav */
@@ -106,7 +112,15 @@ div#App {
 
 .nav-li {
   list-style: none;
-  width: 100%
+  width: 100%;
+  text-decoration: none;
+}
+
+.nav-li-home {
+  list-style: none;
+  width: 100%;
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
 .nav-description {
