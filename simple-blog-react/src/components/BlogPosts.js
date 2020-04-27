@@ -40,22 +40,30 @@ class BlogPosts extends Component {
             let blogDate = post.createdAt
             let formatDate = this.getDate(blogDate)
             return (
+              <div className="blog-detail-div">
               <React.Fragment key={index}>
-                <img className="image-thumbnail" src={blogImage}/>
-                <h3 className="blog-title">{blogTitle}</h3>
-                <div className="author-date-div">
-                  <h5 className="blog-author">{blogAuthor}  --  </h5>
-                  <h5 className="date-created">{formatDate}</h5>
-                </div>
-                <ReactMarkdown className="blog-post" source={blogPost} />
-                {isAuth ? 
-                  <div>
-                    <button className="edit" name={blogId} onClick={this.update}>Edit</button>
+                <div className="blog-detail-data">
+                  <h3 className="blog-title">{blogTitle}</h3>
+                  <div className="author-date-div">
+                    <h5 className="blog-author">{blogAuthor}  --  </h5>
+                    <h5 className="date-created">{formatDate}</h5>
                   </div>
-                  : null
+                  <ReactMarkdown className="blog-post" source={blogPost} />
+                  {isAuth ? 
+                    <div>
+                      <button className="edit" name={blogId} onClick={this.update}>Edit</button>
+                    </div>
+                    : null
+                  }
+                </div>
+                {/* Check if blog image exists */}
+                {blogImage ? 
+                  <img className="image-thumbnail" src={blogImage} alt="trees in spring" />
+                : null
                 }
                 <hr className="line-break"></hr>
               </React.Fragment> 
+              </div>
             )
           })
           : null

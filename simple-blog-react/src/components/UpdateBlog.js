@@ -202,9 +202,9 @@ class UpdateBlog extends Component {
         }
       </form>
       <div id="update-button-div">
-        <button className="options-button" onClick={this.handleSubmit}>Submit</button>
-        <button className="options-button" onClick={this.handleCancel}> Cancel </button>
-        <button className="options-button" onClick={this.areYouSure} >Delete</button>
+        <button className="options-button-update" onClick={this.handleSubmit}>Submit</button>
+        <button className="options-button-update" onClick={this.handleCancel}> Cancel </button>
+        <button className="options-button-update" onClick={this.areYouSure} >Delete</button>
       </div>
     </div>
     )

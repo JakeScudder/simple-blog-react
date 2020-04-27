@@ -77,7 +77,7 @@ class BlogDetail extends Component {
     }
     
     return (
-      <div>
+      <div id="blog-detail-div">
       {this.state.formatError ? 
       <h5>Sorry, we couldn't find the blog you were looking for.</h5>
       : null
