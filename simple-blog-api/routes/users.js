@@ -21,6 +21,17 @@ function asyncHandler(cb){
   }
 }
 
+function isUnique(value) {
+  return User.findOne({where:{emailAddress:value}})
+    .then((emailAddress) => {
+      if (emailAddress) {
+        throw new Error('Validation error');
+      }
+    })
+  
+}
+
+
 //Authenticate User Function
 const authenticateUser = async (req, res, next) => {
   let message = null;
@@ -79,21 +90,32 @@ router.post('/users',[
   check('emailAddress')
     .isEmail()
     .exists({ checkNull: true, checkFalsy: true })
-    .withMessage('Please include your "email"'),
+    .withMessage('Please include your "email"')
+    // Makes sure email is unique
+    .custom(value => {
+      return User.findOne({where:{emailAddress:value}})
+    .then((emailAddress) => {
+      if (emailAddress) {
+        throw new Error('Validation error');
+      }
+    })
+    }),
   check('password')
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Please type your "password"'),
 ], async (req, res) => {
   const errors = validationResult(req);
+  let email = req.body.emailAddress
   //If there are validation errors
   if(!errors.isEmpty()) {
     const errorMessages = errors.array().map(error => error.msg);
     return res.status(400).json({errors: errorMessages});
   }
+
   //Create the user
   let user;
   try {
-    let email = req.body.emailAddress
+    email = req.body.emailAddress
       user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -105,30 +127,21 @@ router.post('/users',[
       .location("/")
       .end();
   } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError"){
-        user = await User.build({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          emailAddress: req.body.email,
-          password: bcryptjs.hashSync(req.body.password)
-        });
-        res.status(409).json({message: "Email already exists, please log in."})
-    } else {
-      throw error;
-    }
-  }
+      console.log(error);
+      res.status(400).json({error});
+  } 
 })
 
 //DELETE route deletes a user, returns no content
 router.delete('/users/:id', authenticateUser, asyncHandler( async (req, res) => {
   try {
-    // const user = req.currentUser;
     let user = await User.findByPk(req.params.id);
-    if (user) {
+    //Does not let Admin be deleted@
+    if (user && user.id !== 1) {
         await user.destroy();
         res.status(204).end();
       } else {
-        res.status(403).json({message: "Sorry, we can't located the user to be deleted"})
+        res.status(403).json({message: "Sorry, The user is an admin or we can't locate the user to be deleted"})
       }
   } catch(error) {
     res.status(500).json({message: error.message})

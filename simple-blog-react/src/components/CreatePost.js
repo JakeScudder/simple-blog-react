@@ -7,7 +7,9 @@ class CreatePost extends Component {
       title: "",
       author: "",
       post: "",
-      errorMessage: null
+      errorMessage: null,
+      authorizationMessage: null,
+      formatMessage: null,
     }
   }
 
@@ -81,11 +83,20 @@ class CreatePost extends Component {
       });
       return null;
       // this.props.history.push('/courses/create');
-    } else if(response.status === 500) {
-      this.props.history.push('/error');
-    }
-    else {
-      throw new Error();
+    } 
+    if (response.status === 403) {
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+      })).then(response => {
+        console.log(response.data.message);
+        let error = response.data.message;
+        this.setState({
+          authorizationMessage: error
+        })
+      })
+    } else {
+      console.log(response);
     }
   }
 
@@ -99,19 +110,23 @@ class CreatePost extends Component {
     <div id="create-post">
       <h1>Create New</h1>
       <div >
+      {this.state.authorizationMessage ? 
+        <h3 id="auth-error">{this.state.authorizationMessage}</h3>
+      : null
+      }
       { (this.state.formatMessage)
         ?
-        <h2 class="validation--errors--label">Validation errors</h2>
+        <h2 className="validation--errors--label">Validation errors</h2>
       : null
       }
       <div className="validation-errors">
         <ul>
           { (this.state.formatMessage) 
-          ?  <li>
+          ?  <div>
                 { this.state.formatMessage.map(error => {
                 return <li>{error}</li>
                 })}
-            </li>
+            </div>
           :  null
           } 
         </ul>

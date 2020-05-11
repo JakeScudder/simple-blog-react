@@ -12,6 +12,7 @@ class UpdateBlog extends Component {
       genre: "",
       image: "",
       errorMessage: null,
+      authorizationMessage: null,
     }
   }
 
@@ -82,8 +83,12 @@ class UpdateBlog extends Component {
           author: response.data.author,
           post: response.data.post,
           genre: response.data.genre,
-          image: response.data.image,
         })
+        if (response.data.image) {
+          this.setState({
+            image: response.data.image,
+          })
+        }
       })
       .catch(error => {
         console.log(error);
@@ -117,7 +122,21 @@ class UpdateBlog extends Component {
            errorMessage: errors
          })
        })
-    } else {
+      // User ID does not match Blog ID
+    } 
+    if (response.status === 403) {
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+      })).then(response => {
+        console.log(response.data.message);
+        let error = response.data.message;
+        this.setState({
+          authorizationMessage: error
+        })
+      })
+    }
+    else {
       console.log(response);
     }
   }
@@ -166,19 +185,24 @@ class UpdateBlog extends Component {
     this.handleUpdate();
   }
 
+  formatErrorMessages = () => {
+    
+  }
+
   render() {
     return(
       <div id="update-container-div">
       <h1>Update</h1>
-      {this.state.errorMessage ? 
-        <div>
-        {this.state.errorMessage.map((error, index) => {
-          return <li key={index}>{error}</li>
-        })
-        }
-        </div>
-      :null
-      }
+      {this.state.authorizationMessage ? 
+      <h3 id="auth-error">{this.state.authorizationMessage}</h3>
+      : null
+     }
+     {this.state.errorMessage ? 
+      this.state.errorMessage.map((error, index) => {
+      return <li key={index}>{error}</li>
+      })
+      : null
+     }
       <form id="update-form" onSubmit={this.handleSubmit}>
         <h3>Title</h3>
           <input id="input-title" name="title" placeholder="Title" onChange={this.handleChange} value={this.state.title}/>

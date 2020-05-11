@@ -18,6 +18,9 @@ body, html {
 
 div#root {
   height: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 div#App {
@@ -267,4 +270,10 @@ a {
 #create-post {
   height: 200px;
   width: 80%;
+}
+
+/* Error Handling */
+
+#auth-error {
+  color: red;
 }

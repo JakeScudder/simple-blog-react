@@ -86,15 +86,24 @@ router.post('/blog/new', [
     .withMessage('Please include your "blog post"'),
 ], authenticateUser, asyncHandler(async (req, res) => {
   const errors = validationResult(req);
+  const user = req.currentUser;
   //If there are validation errors
   if(!errors.isEmpty()) {
+    if (user.id !== 1) {
+      return res.status(403).json({message: "Sorry, you don't have authorization to create a post."})
+    }
     const errorMessages = errors.array().map(error => error.msg);
     return res.status(400).json({errors: errorMessages});
   }
   let blogPost;
   try {
-    blogPost = await Blog.create(req.body);
-    res.status(201).json({blogPost});
+    if (user.id === 1) {
+      blogPost = await Blog.create(req.body);
+      res.status(201).json({blogPost});
+    } else {
+      res.status(403).json({message: "Sorry, you don't have authorization to create a post."})
+    }
+    
   } catch (error) {
     console.log(error);
     if (error.name === "SequelizeValidationError") {
@@ -118,23 +127,31 @@ router.put('/blog/:id', [
     .withMessage('Blog post is blank'),
 ], authenticateUser, asyncHandler(async (req, res) => {
   const errors = validationResult(req);
+  const user = req.currentUser;
+  let blog = await Blog.findByPk(req.params.id);
   //If there are errors
   if(!errors.isEmpty()) {
+    //Not Authorized
+    if (blog.userId !== user.id) {
+      return res.status(403).json({message: "Sorry, you don't have authorization to update that post."})
+    }
     const errorMessages = errors.array().map(error => error.msg);
     return res.status(400).json({errors: errorMessages});
   }
   //Update Blog
   try {
-    let blog = await Blog.findByPk(req.params.id);
-    console.log("blog genre:", blog.genre);
-    console.log("req.params.id:", req.params.id);
+    blog = await Blog.findByPk(req.params.id);
     if (blog) {
-      blog.title = req.body.title;
-      blog.post = req.body.post;
-      blog.genre = req.body.genre;
-      blog.image = req.body.image;
-      await blog.update(req.body);
-      res.status(204).end();
+      if (blog.userId === user.id ) {
+        blog.title = req.body.title;
+        blog.post = req.body.post;
+        blog.genre = req.body.genre;
+        blog.image = req.body.image;
+        await blog.update(req.body);
+        res.status(204).end();
+      } else {
+        res.status(403).json({message: "Sorry, you don't have authorization to update that post."})
+      }  
     } else {
       res.status(404).json({message: "Sorry, we couldn't locate that blog post."})
     }
@@ -148,7 +165,8 @@ router.delete('/blog/:id', authenticateUser, asyncHandler( async (req, res) => {
   try {
     // const user = req.currentUser;
     let blogPost = await Blog.findByPk(req.params.id);
-    if (blogPost) {
+    const user = req.currentUser;
+    if (blogPost && user.id === 1) {
         await blogPost.destroy();
         res.status(204).end();
       } else {

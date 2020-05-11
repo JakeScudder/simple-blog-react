@@ -40,7 +40,7 @@ class BlogPosts extends Component {
             let blogDate = post.createdAt
             let formatDate = this.getDate(blogDate)
             return (
-              <div className="blog-detail-div">
+              <div key={index} className="blog-detail-div">
               <React.Fragment key={index}>
                 <div className="blog-detail-data">
                   <h3 className="blog-title">{blogTitle}</h3>
