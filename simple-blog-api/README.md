@@ -1,2 +1,2 @@
 # simple-blog
- Personal Blog
+ Node.js Express server for React Blog
