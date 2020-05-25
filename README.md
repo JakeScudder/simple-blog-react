@@ -7,7 +7,7 @@
 
 ### Description
 
-This app was built using create-react-app and is the combination of a React Front End with a custom REST API that allows an admin to make blog posts.  In this full stack application, the blog admin is able to easily use all CRUD operations relating to blog creation and alteration. Basic Authentication is used to make sure only the admin is able to use CRUD operations on posts.  
+This app was built using create-react-app and is the combination of a React Front End with a custom REST API that allows an admin to make blog posts.  In this full stack application, the blog admin is able to easily use all CRUD operations relating to blog creation and alteration. Basic Authentication is used to make sure only the admin is able to use CRUD operations on posts. Because I used sqlite3 for the database, I have been unable to figure out how to deploy this project to a live website.  I will be using a MYSQL database for a future version of this project in order to deploy it properly at completion.
 
 ### How To Use
 
