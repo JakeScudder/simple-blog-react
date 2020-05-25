@@ -16,17 +16,10 @@ After cloning this respository you can:
 Navigate to the /simple-blog-api folder in your terminal and run:
 ```
 npm install
-npm start
+npm run dev
 ```
+Because I am using the "concurrently" dependency, these two commands can get the bot the client and server side of the blog up and running with one command.  If the development server does not direct you to the page, you can access the project at:
 
-Then open a new terminal and navigate to the /simple-blog-react folder and run:
-
-```
-npm install
-npm start
-```
-
-If the development server does not direct you to the page, you can access the project at
 ```
 http://localhost:3000
 ```
